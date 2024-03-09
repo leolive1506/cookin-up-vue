@@ -1,12 +1,16 @@
 <script lang="ts">
+import MostrarReceitas from './MostrarReceitas.vue'
 import SelecionarIngredientes from './SelecionarIngredientes.vue'
 import SuaLista from './SuaLista.vue'
 
+type Pagina = 'SelecionarIngredientes' | 'MostrarReceitas'
+
 export default {
-  components: { SelecionarIngredientes, SuaLista },
+  components: { SelecionarIngredientes, SuaLista, MostrarReceitas },
   data() {
     return {
-      ingredientes: [] as string[]
+      ingredientes: [] as string[],
+      conteudo: 'MostrarReceitas' as Pagina
     }
   },
   methods: {
@@ -17,16 +21,25 @@ export default {
       const index = this.ingredientes.indexOf(ingrediente);
       this.ingredientes.splice(index, 1)
     },
+    navegar(page: Pagina) {
+      this.conteudo = page
+    }
   }
 }
 </script>
 <template>
   <main class="conteudo-principal">
     <sua-lista :ingredientes="ingredientes" />
-
+    
     <selecionar-ingredientes
+      v-if="conteudo === 'SelecionarIngredientes'"
       @adicionar-ingrediente="adicionarIngrediente"
       @remover-ingrediente="removerIngrediente"
+      @buscar-receitas="navegar('MostrarReceitas')"
+    />
+    <mostrar-receitas
+      v-if="conteudo === 'MostrarReceitas'"
+      @editar-receitas="navegar('SelecionarIngredientes')"
     />
   </main>
 </template>

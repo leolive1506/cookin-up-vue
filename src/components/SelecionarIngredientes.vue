@@ -14,7 +14,7 @@ export default {
   async created() {
     this.categorias = await getCategorias()
   },
-  emits: ['adicionarIngrediente', 'removerIngrediente']
+  emits: ['adicionarIngrediente', 'removerIngrediente', 'buscarReceitas']
 }
 </script>
 <template>
@@ -39,7 +39,10 @@ export default {
       *Atenção: consideramos que você tem em casa sal, pimenta e água
     </p>
 
-    <botao-principal texto="Buscar receitas!" />
+    <botao-principal
+      texto="Buscar receitas!"
+      @click="$emit('buscarReceitas')"
+    />
   </section>
 </template>
 
