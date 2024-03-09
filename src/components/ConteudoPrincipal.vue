@@ -6,16 +6,21 @@ export default {
   components: { SelecionarIngredientes, SuaLista },
   data() {
     return {
-      ingredientes: ['Alho', 'Manteiga', 'Orégano']
+      ingredientes: [] as string[]
     }
   },
+  methods: {
+    adicionarIngrediente(ingrediente: string) {
+      this.ingredientes.push(ingrediente)
+    }
+  }
 }
 </script>
 <template>
   <main class="conteudo-principal">
     <sua-lista :ingredientes="ingredientes" />
 
-    <selecionar-ingredientes />
+    <selecionar-ingredientes @adicionar-ingrediente="adicionarIngrediente"/>
   </main>
 </template>
 

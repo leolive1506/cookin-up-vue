@@ -1,3 +1,23 @@
+# Events emit
+```ts
+export default {
+  data() {
+    return {
+      selecionado: false
+    }
+  },
+  methods: {
+    aoClicar() {
+      this.selecionado = !this.selecionado
+
+      if (this.selecionado) {
+        this.$emit('adicionar', this.ingrediente)
+      }
+    }
+  },
+  emits: ['adicionar']
+}
+```
 # Single file componentes
 - componente de arquivo único (Html, css e js mesmo arquivo)
 
