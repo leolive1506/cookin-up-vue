@@ -12,7 +12,11 @@ export default {
   methods: {
     adicionarIngrediente(ingrediente: string) {
       this.ingredientes.push(ingrediente)
-    }
+    },
+    removerIngrediente(ingrediente: string) {
+      const index = this.ingredientes.indexOf(ingrediente);
+      this.ingredientes.splice(index, 1)
+    },
   }
 }
 </script>
@@ -20,7 +24,10 @@ export default {
   <main class="conteudo-principal">
     <sua-lista :ingredientes="ingredientes" />
 
-    <selecionar-ingredientes @adicionar-ingrediente="adicionarIngrediente"/>
+    <selecionar-ingredientes
+      @adicionar-ingrediente="adicionarIngrediente"
+      @remover-ingrediente="removerIngrediente"
+    />
   </main>
 </template>
 
