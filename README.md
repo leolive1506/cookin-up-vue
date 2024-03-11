@@ -18,6 +18,33 @@ export default {
   emits: ['adicionar']
 }
 ```
+
+# KeepAlive
+- manter estado do componente "vivo"
+- guarda estado em cache
+- possivel especificar qual componentes quer deixar em cache, passando o nome do componente
+```vue
+<template>
+<keep-alive include="selecionar-ingredientes">
+  <selecionar-ingredientes
+    v-if="conteudo === 'SelecionarIngredientes'"
+    @adicionar-ingrediente="adicionarIngrediente"
+    @remover-ingrediente="removerIngrediente"
+    @buscar-receitas="navegar('MostrarReceitas')"
+  />
+  <mostrar-receitas
+    v-else
+    @editar-receitas="navegar('SelecionarIngredientes')"
+  />
+</keep-alive>
+</template>
+<script lang="ts">
+// no componente selecionar-ingredientes
+export default {
+  name: 'selecionar-ingredientes',
+}
+</script>
+```
 # Single file componentes
 - componente de arquivo único (Html, css e js mesmo arquivo)
 
@@ -36,3 +63,4 @@ tree
 # windows
 tree /f
 ```
+

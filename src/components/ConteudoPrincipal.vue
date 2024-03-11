@@ -4,13 +4,12 @@ import SelecionarIngredientes from './SelecionarIngredientes.vue'
 import SuaLista from './SuaLista.vue'
 
 type Pagina = 'SelecionarIngredientes' | 'MostrarReceitas'
-
 export default {
   components: { SelecionarIngredientes, SuaLista, MostrarReceitas },
   data() {
     return {
       ingredientes: [] as string[],
-      conteudo: 'MostrarReceitas' as Pagina
+      conteudo: 'SelecionarIngredientes' as Pagina
     }
   },
   methods: {
@@ -31,16 +30,19 @@ export default {
   <main class="conteudo-principal">
     <sua-lista :ingredientes="ingredientes" />
     
-    <selecionar-ingredientes
-      v-if="conteudo === 'SelecionarIngredientes'"
-      @adicionar-ingrediente="adicionarIngrediente"
-      @remover-ingrediente="removerIngrediente"
-      @buscar-receitas="navegar('MostrarReceitas')"
-    />
-    <mostrar-receitas
-      v-if="conteudo === 'MostrarReceitas'"
-      @editar-receitas="navegar('SelecionarIngredientes')"
-    />
+    <keep-alive include="selecionar-ingredientes">
+      <selecionar-ingredientes
+        v-if="conteudo === 'SelecionarIngredientes'"
+        @adicionar-ingrediente="adicionarIngrediente"
+        @remover-ingrediente="removerIngrediente"
+        @buscar-receitas="navegar('MostrarReceitas')"
+      />
+      <mostrar-receitas
+        v-else
+        :ingredientes="ingredientes"
+        @editar-receitas="navegar('SelecionarIngredientes')"
+      />
+    </keep-alive>
   </main>
 </template>
 

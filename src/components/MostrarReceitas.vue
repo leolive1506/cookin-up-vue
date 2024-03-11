@@ -3,16 +3,23 @@ import type { IReceita } from "@/interfaces/IReceita"
 import { getReceitas } from '@/http';
 import CardReceita from './CardReceita.vue'
 import BotaoPrincipal from './BotaoPrincipal.vue'
+import type { PropType } from "vue";
 
 export default {
   components: { CardReceita, BotaoPrincipal },
+  props: {
+    ingredientes: { type: Array as PropType<string[]>, required: true }
+  },
   data() {
     return {
       receitas: [] as IReceita[]
     }
   },
   async created() {
-    this.receitas = await getReceitas()
+    const responseReceitas = await getReceitas()
+    this.receitas = responseReceitas.filter((receita: IReceita) => {
+      return receita.ingredientes.every((ingrediente: string) => this.ingredientes.includes(ingrediente))
+    })
   },
   emits: ['editarReceitas']
 }
